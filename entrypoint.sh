@@ -216,7 +216,8 @@ generate_config() {
                 "type":"field",
                 "domain":[
                     "domain:openai.com",
-                    "domain:ai.com"
+                    "domain:ai.com",
+                    "domain:myip.link"
                 ],
                 "outboundTag":"WARP"
             }
