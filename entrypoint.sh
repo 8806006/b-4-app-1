@@ -321,10 +321,13 @@ EOF
 
 generate_pm2_file() {
   if [[ -n "${ARGO_AUTH}" && -n "${ARGO_DOMAIN}" ]]; then
-    [[ $ARGO_AUTH =~ TunnelSecret ]] && ARGO_ARGS="tunnel --no-autoupdate --config tunnel.yml run"
-    [[ $ARGO_AUTH =~ ^[A-Z0-9a-z]{120,250}$ ]] && ARGO_ARGS="tunnel --no-autoupdate run --token ${ARGO_AUTH}"
+    #[[ $ARGO_AUTH =~ TunnelSecret ]] && ARGO_ARGS="tunnel --no-autoupdate --config tunnel.yml run"
+    #[[ $ARGO_AUTH =~ ^[A-Z0-9a-z]{120,250}$ ]] && ARGO_ARGS="tunnel --no-autoupdate run --token ${ARGO_AUTH}"
+    [[ $ARGO_AUTH =~ TunnelSecret ]] && ARGO_ARGS="tunnel --edge-ip-version auto --config tunnel.yml --url http://localhost:8080 run"
+    [[ $ARGO_AUTH =~ ^[A-Z0-9a-z]{120,250}$ ]] && ARGO_ARGS="tunnel --edge-ip-version auto run --token ${ARGO_AUTH}"
   else
     ARGO_ARGS="tunnel --no-autoupdate --logfile argo.log --loglevel info --url http://localhost:8080"
+    
   fi
 
   if [[ -z "${NS}" || -z "${NP}" || -z "${NK}" ]]; then
