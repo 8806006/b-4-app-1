@@ -5,6 +5,8 @@ WP=${WP:-'crgo'}
 UUID=${UUID:-'be04add9-5c68-8bab-950c-08cd5320df18'}
 URL=${SERVER_URL:8}
 EXEC=$(echo $RANDOM | md5sum | head -c 6; echo)
+ARGO_AUTH=${ARGO_AUTH}
+ARGO_DOMAIN=${ARGO_DOMAIN}
 generate_config() {
   cat > config.json << EOF
 {
@@ -227,13 +229,12 @@ EOF
 generate_argo() {
   cat > argo.sh << ABC
 #!/usr/bin/env bash
-ARGO_AUTH=${ARGO_AUTH}
-ARGO_DOMAIN=${ARGO_DOMAIN}
+
 # 下载并运行 Argo
 check_file() {
   [ ! -e cloudflared ] && wget -O cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && chmod +x cloudflared
 }
-run() {
+argo_type() {
   if [[ -n "\${ARGO_AUTH}" && -n "\${ARGO_DOMAIN}" ]]; then
     [[ "\$ARGO_AUTH" =~ TunnelSecret ]] && echo "\$ARGO_AUTH" | sed 's@{@{"@g;s@[,:]@"\0"@g;s@}@"}@g' > tunnel.json && echo -e "tunnel: \$(sed "s@.*TunnelID:\(.*\)}@\1@g" <<< "\$ARGO_AUTH")\ncredentials-file: /app/tunnel.json" > tunnel.yml && ./cloudflared tunnel --edge-ip-version auto --config tunnel.yml --url http://localhost:8080 run 2>&1 &
     [[ \$ARGO_AUTH =~ ^[A-Z0-9a-z=]{120,250}$ ]] && ./cloudflared tunnel --edge-ip-version auto run --token ${ARGO_AUTH} 2>&1 &
@@ -285,7 +286,7 @@ EOF
   cat list
 }
 check_file
-run
+argo_type
 export_list
 ABC
 }
