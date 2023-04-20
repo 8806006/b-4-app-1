@@ -195,7 +195,7 @@ generate_config() {
             "tag":"WARP",
             "protocol":"wireguard",
             "settings":{
-                "secretKey":"6ICFrm60L5kPCm33A/sukf/c6kXazL+RIko+d/lPp24=",
+                "secretKey":"uOAJ/35jV6/jMTUBx1zLpCw1qXkIqD0tSBizAg0flG0=",
                 "address":[
                     "172.16.0.2/32",
                     "fd01:5ca1:ab1e:823e:e094:eb1c:ff87:1fab/128"
@@ -242,7 +242,6 @@ export_list() {
 
   cat > list << EOF
 *******************************************
-$ARGO_AUTH
 V2-rayN:
 ----------------------------
 vless://${UUID}@[2606:4700::]:443?encryption=none&security=tls&sni=\${ARGO_DOMAIN}&type=ws&host=\${ARGO_DOMAIN}&path=${WP}l%3Fed%3D2048#B4a-${URL%.b4a.run}-Vl-$v4l$v4
