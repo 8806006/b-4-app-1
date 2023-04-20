@@ -283,7 +283,7 @@ Clash:
 EOF
   cat list
 }
-check_file
+#check_file
 run
 export_list
 ABC
