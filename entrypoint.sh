@@ -243,8 +243,6 @@ export_list() {
 
   cat > list << EOF
 *******************************************
-URL:$URL
-url:$url
 V2-rayN:
 ----------------------------
 vless://${UUID}@[2606:4700::]:443?encryption=none&security=tls&sni=\${ARGO_DOMAIN}&type=ws&host=\${ARGO_DOMAIN}&path=${WP}l%3Fed%3D2048#B4a-${URL}-Vl-$v4l$v4
